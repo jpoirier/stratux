@@ -8,7 +8,8 @@ endif
 
 all:
 	make xdump978
-	make xdump1090
+	#make xdump1090
+	make xlibdump1090
 	make xlinux-mpu9150
 	make xgen_gdl90
 
@@ -16,6 +17,11 @@ xgen_gdl90:
 	go get -t -d -v ./main ./test ./linux-mpu9150/mpu ./godump978 ./mpu6050 ./uatparse
 	go build $(BUILDINFO) -p 4 main/gen_gdl90.go main/traffic.go main/ry835ai.go main/network.go main/managementinterface.go main/sdr.go main/uibroadcast.go main/monotonic.go main/datalog.go main/equations.go
 
+xlibdump1090:
+	#git submodule update --init
+	cd dump1090 && make lib
+	sudo cp -f ./libdump1090.so /usr/lib/libdump1090.so
+	
 xdump1090:
 	git submodule update --init
 	cd dump1090 && make
